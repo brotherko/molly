@@ -1,6 +1,6 @@
 import './App.css';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import { AddGameView } from './views/AddGameView';
+import { Face, Assessment } from '@material-ui/icons';
+import { PlayersList } from './views/PlayersList';
 import { ResultView } from './views/ResultView';
 import {
   BrowserRouter as Router,
@@ -9,8 +9,8 @@ import {
   Link
 } from "react-router-dom";
 import React from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Icon, BottomNavigation, BottomNavigationAction, Container, Box, MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { BottomNavigation, BottomNavigationAction, Container, MuiThemeProvider, CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -28,7 +28,7 @@ function App() {
               <Container>
                 <Switch>
                   <Route path="/add">
-                    <AddGameView />
+                    <PlayersList />
                   </Route>
                   <Route path="/result">
                     <ResultView />
@@ -42,21 +42,21 @@ function App() {
                 to="/add"
                 label="Add"
                 value="add"
-                icon={<AddBoxIcon />}
+                icon={<Face />}
               />
               <BottomNavigationAction
                 component={Link}
                 to="/result"
                 label="Result"
                 value="result"
-                icon={<AddBoxIcon />}
+                icon={<Assessment />}
               />
               <BottomNavigationAction
                 component={Link}
                 to="/add"
                 label="Option"
                 value="add"
-                icon={<AddBoxIcon />}
+                // icon={<AddBoxIcon />}
               />
             </BottomNavigation>
           </Router>
