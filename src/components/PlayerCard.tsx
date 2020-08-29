@@ -28,22 +28,18 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
   player: Player,
-  isEdit?: boolean
+  removePlayer: () => void
 }
 
-export const PlayerCard = ({ player: { name }, isEdit }: Props) => {
+export const PlayerCard = ({ player: { name }, removePlayer }: Props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardContent>
         <Avatar seed={name} className={classes.avatar} />
-        {isEdit || false ?
-          <TextField />
-          :
-          <Typography variant="h6" component="h2" className={classes.title}>
-            {name}
-          </Typography>
-        }
+        <Typography variant="h6" component="h2" className={classes.title}>
+          {name}
+        </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
         <IconButton aria-label="favorite" size='small'>
@@ -53,7 +49,9 @@ export const PlayerCard = ({ player: { name }, isEdit }: Props) => {
           <Edit />
         </IconButton>
         <IconButton aria-label="delete" size='small'>
-          <Delete />
+          <div onClick={() => removePlayer()}>
+            <Delete />
+          </div>
         </IconButton>
       </CardActions>
     </Card>

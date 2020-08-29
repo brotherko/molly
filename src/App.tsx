@@ -19,8 +19,8 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    height: 'calc(100vh - 100px)',
-    overflow: 'scroll',
+    height: 'calc(100vh - 104px)',
+    overflow: 'auto',
   }
 }));
 
@@ -34,7 +34,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <Router>
-        <Container className={classes.content}>
+        <Box className={classes.content}>
           <Switch>
             <Route path="/add">
               <PlayersList />
@@ -43,7 +43,7 @@ function App() {
               <ResultView />
             </Route>
           </Switch>
-        </Container>
+        </Box>
         <BottomNavigation>
           <BottomNavigationAction
             component={Link}

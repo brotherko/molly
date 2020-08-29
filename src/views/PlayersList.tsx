@@ -1,10 +1,11 @@
-import React from 'react';
-import { Box, makeStyles, Fab } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, makeStyles, Fab, Container } from '@material-ui/core';
 import { PlayerCard } from '../components/PlayerCard';
 import { Add } from '@material-ui/icons';
 import { connect, ConnectedProps } from 'react-redux';
 import { addPlayer, removePlayer } from '../redux/player/player.actions';
 import { RootState } from '../redux/rootReducer';
+import { PlayerCreateModal } from '../components/PlayerCreateModal';
 
 const mapState = (state: RootState) => ({
   players: state.player.players
@@ -41,19 +42,24 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayersList = ({ players, addPlayer, removePlayer }: Props) => {
   const classes = useStyles();
+  const [isOpenCreateModal, setOpenCreateModal] = useState(false);
   return (
+    <Container>
+    <PlayerCreateModal addPlayer={addPlayer} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
+    <Fab color="inherit" aria-label="add" className={classes.fab} size="medium">
+      <div onClick={() => setOpenCreateModal(true)}><Add /></div>
+    </Fab>
     <Box display="flex" flexWrap="wrap">
-      <Fab color="inherit" aria-label="add" className={classes.fab} size="medium">
-        <div onClick={() => addPlayer({ name: 'hi' })}><Add /></div>
-      </Fab>
       {
         players && players.map((player) => (
           <Box flex-basis="50%" className={classes.card}>
-            <PlayerCard player={player} />
+            <PlayerCard player={player} removePlayer={() => removePlayer(player)} />
           </Box>
         ))
       }
     </Box>
+
+    </Container>
   )
 }
 
