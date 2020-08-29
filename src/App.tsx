@@ -1,6 +1,5 @@
-import './App.css';
 import { Face, Assessment } from '@material-ui/icons';
-import { PlayersList } from './views/PlayersList';
+import PlayersList from './views/PlayersList';
 import { ResultView } from './views/ResultView';
 import {
   BrowserRouter as Router,
@@ -10,7 +9,7 @@ import {
 } from "react-router-dom";
 import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BottomNavigation, BottomNavigationAction, Container, MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, Container, MuiThemeProvider, CssBaseline, AppBar, Toolbar, IconButton, Typography, createStyles, makeStyles, Box } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,49 +17,57 @@ const theme = createMuiTheme({
   }
 })
 
+const useStyles = makeStyles((theme) => ({
+  content: {
+    height: 'calc(100vh - 100px)',
+    overflow: 'scroll',
+  }
+}));
+
 function App() {
+  const classes = useStyles();
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
-          <Router>
-            <div className="appContent">
-              <Container>
-                <Switch>
-                  <Route path="/add">
-                    <PlayersList />
-                  </Route>
-                  <Route path="/result">
-                    <ResultView />
-                  </Route>
-                </Switch>
-              </Container>
-            </div>
-            <BottomNavigation>
-              <BottomNavigationAction
-                component={Link}
-                to="/add"
-                label="Add"
-                value="add"
-                icon={<Face />}
-              />
-              <BottomNavigationAction
-                component={Link}
-                to="/result"
-                label="Result"
-                value="result"
-                icon={<Assessment />}
-              />
-              <BottomNavigationAction
-                component={Link}
-                to="/add"
-                label="Option"
-                value="add"
-                // icon={<AddBoxIcon />}
-              />
-            </BottomNavigation>
-          </Router>
-      </div>
+      <AppBar position="sticky" color="inherit">
+        <Toolbar variant="dense">
+        </Toolbar>
+      </AppBar>
+      <Router>
+        <Container className={classes.content}>
+          <Switch>
+            <Route path="/add">
+              <PlayersList />
+            </Route>
+            <Route path="/result">
+              <ResultView />
+            </Route>
+          </Switch>
+        </Container>
+        <BottomNavigation>
+          <BottomNavigationAction
+            component={Link}
+            to="/add"
+            label="Add"
+            value="add"
+            icon={<Face />}
+          />
+          <BottomNavigationAction
+            component={Link}
+            to="/result"
+            label="Result"
+            value="result"
+            icon={<Assessment />}
+          />
+          <BottomNavigationAction
+            component={Link}
+            to="/add"
+            label="Option"
+            value="add"
+          // icon={<AddBoxIcon />}
+          />
+        </BottomNavigation>
+      </Router>
     </MuiThemeProvider>
   );
 }
