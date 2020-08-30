@@ -3,42 +3,42 @@ import { List, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-
 import { AttachMoney, Add } from '@material-ui/icons'
 import { FloatingButton } from '../components/FloatingButton';
 import { RootState } from '../redux/rootReducer';
-import { fetchGameAction, addGameAction, removeGameAction } from '../redux/game/game.actions';
+import { fetchBookAction, addBookAction, removeBookAction } from '../redux/book/book.actions';
 import { connect, ConnectedProps } from 'react-redux';
-import { GameMode } from '../types/game';
+import { BookMode } from '../types/book';
 
 const mapState = (state: RootState) => ({
-  games: state.game.games
+  books: state.book.books
 })
 
 const mapDispatch = {
-  fetchGame: fetchGameAction.request,
-  addGame: addGameAction.request,
-  removeGame: removeGameAction.request,
+  fetchBook: fetchBookAction.request,
+  addBook: addBookAction.request,
+  removeBook: removeBookAction.request,
 }
 
 const connector = connect(mapState, mapDispatch)
 
 type Props = ConnectedProps<typeof connector>
 
-const BookList = ({ games, fetchGame, addGame, removeGame }: Props) => {
+const BookList = ({ books, fetchBook, addBook, removeBook }: Props) => {
   useEffect(() => {
-    fetchGame();
+    fetchBook();
   }, [])
   return (
     <div>
-      <FloatingButton onClick={() => addGame({ gameMode: GameMode.BIG2, created: new Date()})}>
+      <FloatingButton onClick={() => addBook({ bookMode: BookMode.BIG2, created: new Date()})}>
         <Add />
       </FloatingButton>
       <List>
-        {games.map((game) => (
+        {books.map((book) => (
           <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <AttachMoney />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={game.gameMode} secondary={game.created} />
+            <ListItemText primary={book.bookMode} secondary={book.created} />
           </ListItem>
         ))}
       </List>

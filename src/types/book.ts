@@ -1,13 +1,13 @@
 import { DocMeta } from "./db";
 
-export enum GameMode {
+export enum BookMode {
   BLACKJACK = 'Blackjack',
   BIG2 = 'Big2',
   POKER = 'Poker'
 }
-export type Game = {
+export type Book = {
   created: Date;
-  gameMode: GameMode,
+  bookMode: BookMode,
 }
 
-export type GameDoc = Game & DocMeta;
+export type BookDoc = Book & DocMeta;

@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 
 import { PlayerState, playerReducer } from './player/player.reducer';
-import { GameState, gameReducer } from './game/game.reducer';
+import { BookState, bookReducer } from './book/book.reducer';
 
 export type RootState = {
 	player: PlayerState;
-	game: GameState;
+	book: BookState;
 }
 
 const rootReducer = combineReducers({
 	player: playerReducer,
-	game: gameReducer,
+	book: bookReducer,
 });
 
 export default rootReducer;
