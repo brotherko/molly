@@ -11,6 +11,7 @@ import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction, MuiThemeProvider, CssBaseline, AppBar, Toolbar, makeStyles, Box } from '@material-ui/core';
 import BookList from './views/BookList';
+import BookDetail from './views/BookDetail';
 
 const theme = createMuiTheme({
   palette: {
@@ -39,6 +40,9 @@ function App() {
           <Switch>
             <Route path="/book">
               <BookList />
+            </Route>
+            <Route path="/book/:id">
+              <BookDetail />
             </Route>
             <Route path="/add">
               <PlayersList />

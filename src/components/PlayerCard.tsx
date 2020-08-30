@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, IconButton, makeStyles, CardActions, TextField } from '@material-ui/core';
 import { Delete, Favorite, Edit } from '@material-ui/icons';
-import { Avatar } from './Avatar';
+import { PlayerAvatar } from './PlayerAvatar';
 import { Player } from '../types/player';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +36,7 @@ export const PlayerCard = ({ player: { name }, removePlayer }: Props) => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Avatar seed={name} className={classes.avatar} />
+        <PlayerAvatar seed={name} className={classes.avatar} />
         <Typography variant="h6" component="h2" className={classes.title}>
           {name}
         </Typography>

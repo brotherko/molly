@@ -11,6 +11,6 @@ const _avatar = new Avatars(sprites, {
   base64: true,
 });
 
-export const Avatar = ( { seed, ...rest }: Props) => {
+export const PlayerAvatar = ( { seed, ...rest }: Props) => {
   return (<MuiAvatar src={_avatar.create(seed)} {...rest}></MuiAvatar>)
 }

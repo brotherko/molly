@@ -1,6 +1,6 @@
 import { Modal, Card, CardContent, TextField, makeStyles, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@material-ui/core"
 import React, { useState, FormEvent } from "react"
-import { Avatar } from "./Avatar"
+import { PlayerAvatar } from "./PlayerAvatar"
 import { addPlayerAction } from '../redux/player/player.actions';
 
 type Props = {
@@ -11,8 +11,8 @@ type Props = {
 const useStyles = makeStyles(() => ({
   avatar: {
     margin: 'auto',
-    width: '90%',
-    height: '90%',
+    width: '80%',
+    height: '80%',
   }
 }))
 export const PlayerCreateModal = ({ isOpen, handleClose, addPlayer }: Props) => {
@@ -29,12 +29,13 @@ export const PlayerCreateModal = ({ isOpen, handleClose, addPlayer }: Props) => 
       onClose={handleClose}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      maxWidth="sm"
+      maxWidth="xs"
+      fullWidth
     >
       <DialogTitle>Create new player</DialogTitle>
       <form onSubmit={handleSubmit}>
         <DialogContent>
-          <Avatar seed={name} className={classes.avatar} />
+          <PlayerAvatar seed={name} className={classes.avatar} />
           <TextField margin="dense" label="name" onChange={(e) => setName(e.target.value)} required autoFocus fullWidth />
         </DialogContent>
         <DialogActions>
