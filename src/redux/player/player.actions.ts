@@ -1,6 +1,6 @@
+import { PlayerDoc } from './../../types/player';
 import { createAsyncAction } from 'typesafe-actions';
 import { Player } from "../../types/player";
-import { DbMeta } from '../../types/db';
 
 const ADD_PLAYER_REQUEST = 'ADD_PLAYER_REQUEST';
 const ADD_PLAYER_SUCCEEDED = 'ADD_PLAYER_SUCCEEDED';
@@ -18,7 +18,7 @@ export const fetchPlayerAction = createAsyncAction(
   FETCH_PLAYER_REQUEST,
   FETCH_PLAYER_SUCCEEDED,
   FETCH_PLAYER_FAILED
-)<undefined, Array<Player & DbMeta>, Error>();
+)<undefined, Array<PlayerDoc>, Error>();
 
 export const addPlayerAction = createAsyncAction(
   ADD_PLAYER_REQUEST,
@@ -30,4 +30,4 @@ export const removePlayerAction = createAsyncAction(
   REMOVE_PLAYER_REQUEST,
   REMOVE_PLAYER_SUCCEEDED,
   REMOVE_PLAYER_FAILED
-)<Player & DbMeta, undefined, Error>();
+)<PlayerDoc, undefined, Error>();

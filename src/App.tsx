@@ -1,4 +1,4 @@
-import { Face, Assessment } from '@material-ui/icons';
+import { Face, AccountBalanceWallet, Assessment } from '@material-ui/icons';
 import PlayersList from './views/PlayersList';
 import { ResultView } from './views/ResultView';
 import {
@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BottomNavigation, BottomNavigationAction, Container, MuiThemeProvider, CssBaseline, AppBar, Toolbar, IconButton, Typography, createStyles, makeStyles, Box } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction, MuiThemeProvider, CssBaseline, AppBar, Toolbar, makeStyles, Box } from '@material-ui/core';
+import BookList from './views/BookList';
 
 const theme = createMuiTheme({
   palette: {
@@ -17,7 +18,7 @@ const theme = createMuiTheme({
   }
 })
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   content: {
     height: 'calc(100vh - 104px)',
     overflow: 'auto',
@@ -36,6 +37,9 @@ function App() {
       <Router>
         <Box className={classes.content}>
           <Switch>
+            <Route path="/book">
+              <BookList />
+            </Route>
             <Route path="/add">
               <PlayersList />
             </Route>
@@ -54,17 +58,17 @@ function App() {
           />
           <BottomNavigationAction
             component={Link}
+            to="/book"
+            label="Option"
+            value="add"
+          icon={<AccountBalanceWallet />}
+          />
+          <BottomNavigationAction
+            component={Link}
             to="/result"
             label="Result"
             value="result"
             icon={<Assessment />}
-          />
-          <BottomNavigationAction
-            component={Link}
-            to="/add"
-            label="Option"
-            value="add"
-          // icon={<AddBoxIcon />}
           />
         </BottomNavigation>
       </Router>

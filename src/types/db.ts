@@ -1,4 +1,4 @@
-export type DbMeta = {
+export type DocMeta = {
   _id: string;
   _rev: string;
 }

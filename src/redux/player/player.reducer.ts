@@ -1,11 +1,10 @@
-import { addPlayerAction, removePlayerAction, fetchPlayerAction } from './player.actions';
-import { Player } from '../../types/player';
+import { fetchPlayerAction } from './player.actions';
+import { PlayerDoc } from '../../types/player';
 import { createReducer } from 'typesafe-actions';
-import { DbMeta } from '../../types/db';
 
 
 export type PlayerState = {
-  players: Array<Player & DbMeta>;
+  players: PlayerDoc[];
 }
 const initalState: PlayerState = {
   players: []

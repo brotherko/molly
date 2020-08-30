@@ -45,13 +45,11 @@ export const PlayerCard = ({ player: { name }, removePlayer }: Props) => {
         <IconButton aria-label="favorite" size='small'>
           <Favorite />
         </IconButton>
-        <IconButton aria-label="delete" size='small'>
+        <IconButton aria-label="edit" size='small'>
           <Edit />
         </IconButton>
-        <IconButton aria-label="delete" size='small'>
-          <div onClick={() => removePlayer()}>
-            <Delete />
-          </div>
+        <IconButton aria-label="delete" size='small' onClick={() => removePlayer()} >
+          <Delete />
         </IconButton>
       </CardActions>
     </Card>

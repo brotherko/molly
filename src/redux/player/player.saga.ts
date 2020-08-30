@@ -1,15 +1,17 @@
+import { PlayerDoc } from './../../types/player';
 import PouchDB from 'pouchdb';
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, all, takeLatest } from 'redux-saga/effects';
 import { addPlayerAction, removePlayerAction, fetchPlayerAction } from './player.actions';
+import { Player } from '../../types/player';
 ;
 const fetchPlayerFromDb = () => {
   const db = new PouchDB('player');
-  return db.allDocs().then((data) => data);
+  return db.allDocs({ include_docs: true }).then((data) => data.rows.map(row => row.doc));
 }
 
 function* fetchPlayerSaga(action: ReturnType<typeof fetchPlayerAction.request>): Generator {
   const db = new PouchDB('player');
-  const docs: any = yield db.allDocs({ include_docs: true }).then((data) => data.rows.map(row => row.doc));
+  const docs: PlayerDoc[] = (yield call(fetchPlayerFromDb)) as PlayerDoc[];
   yield put(fetchPlayerAction.success(docs))
 }
 
@@ -32,7 +34,7 @@ function* removePlayerSaga(action: ReturnType<typeof removePlayerAction.request>
 
 export function* PlayerSaga(){
   yield all([
-    takeEvery(fetchPlayerAction.request, fetchPlayerSaga),
+    takeLatest(fetchPlayerAction.request, fetchPlayerSaga),
     takeEvery(addPlayerAction.request, addPlayerSaga),
     takeEvery(removePlayerAction.request, removePlayerSaga)
   ]);

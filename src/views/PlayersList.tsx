@@ -6,6 +6,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { addPlayerAction, removePlayerAction, fetchPlayerAction } from '../redux/player/player.actions';
 import { RootState } from '../redux/rootReducer';
 import { PlayerCreateModal } from '../components/PlayerCreateModal';
+import { FloatingButton } from '../components/FloatingButton';
 
 const mapState = (state: RootState) => ({
   players: state.player.players
@@ -31,14 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '0 0 50%',
     padding: 10,
   },
-  fab: {
-    margin: 0,
-    top: 'auto',
-    right: 20,
-    bottom: 70,
-    left: 'auto',
-    position: 'fixed',
-  }
+
 }));
 
 const PlayersList = ({ players, addPlayer, fetchPlayer, removePlayer }: Props) => {
@@ -50,20 +44,19 @@ const PlayersList = ({ players, addPlayer, fetchPlayer, removePlayer }: Props) =
 
   return (
     <Container>
-    <PlayerCreateModal addPlayer={addPlayer} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
-    <Fab color="inherit" aria-label="add" className={classes.fab} size="medium">
-      <div onClick={() => setOpenCreateModal(true)}><Add /></div>
-    </Fab>
-    <Box display="flex" flexWrap="wrap">
-      {
-        players && players.map((player) => (
-          <Box flex-basis="50%" className={classes.card}>
-            <PlayerCard player={player} removePlayer={() => removePlayer(player)} />
-          </Box>
-        ))
-      }
-    </Box>
-
+      <FloatingButton onClick={() => setOpenCreateModal(true)}>
+        <Add />
+      </FloatingButton>
+      <PlayerCreateModal addPlayer={addPlayer} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
+      <Box display="flex" flexWrap="wrap">
+        {
+          players && players.map((player) => (
+            <Box flex-basis="50%" className={classes.card}>
+              <PlayerCard player={player} removePlayer={() => removePlayer(player)} />
+            </Box>
+          ))
+        }
+      </Box>
     </Container>
   )
 }
