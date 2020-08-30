@@ -1,21 +1,17 @@
-import { PlayerState, PlayerActionTypes, ADD_PLAYER, REMOVE_PLAYER } from './player.types';
+import { addPlayerAction, removePlayerAction } from './player.actions';
+import { Player } from '../../types/player';
+import { createReducer } from 'typesafe-actions';
 
+export type PlayerState = {
+  players: Player[];
+}
 const initalState: PlayerState = {
   players: []
 };
 
-export const playerReducer = (state = initalState, action: PlayerActionTypes): PlayerState => {
-  switch(action.type) {
-    case ADD_PLAYER:
-      const newId = (state.players.length > 0) ? state.players.slice(-1)[0].id + 1 : 1;
-      return { 
-        players: [ ...state.players, { id: newId, ...action.payload } ]
-      }
-    case REMOVE_PLAYER:
-      return { 
-        players: state.players.filter(player => player.name !== action.payload.name)
-      }
-    default:
-      return state
-  }
-}
+export const playerReducer = 
+  createReducer(initalState)
+  .handleAction(addPlayerAction.success, 
+    (state, action) => ({ players: [...state.players, { ...action.payload }] }))
+  .handleAction(removePlayerAction.success, 
+    (state, action) => ({ players: state.players.filter(player => player !== action.payload ) }));

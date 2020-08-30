@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { playerReducer } from './player/player.reducer';
-import { PlayerState } from './player/player.types';
+import { PlayerState, playerReducer } from './player/player.reducer';
 
 export type RootState = {
 	player: PlayerState;

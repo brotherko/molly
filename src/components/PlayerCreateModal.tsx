@@ -1,12 +1,12 @@
 import { Modal, Card, CardContent, TextField, makeStyles, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@material-ui/core"
 import React, { useState, FormEvent } from "react"
 import { Avatar } from "./Avatar"
-import { addPlayer } from '../redux/player/player.actions';
+import { addPlayerAction } from '../redux/player/player.actions';
 
 type Props = {
   isOpen: boolean,
   handleClose: any,
-  addPlayer: typeof addPlayer, 
+  addPlayer: typeof addPlayerAction.request, 
 }
 const useStyles = makeStyles(() => ({
   avatar: {

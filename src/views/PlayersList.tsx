@@ -3,7 +3,7 @@ import { Box, makeStyles, Fab, Container } from '@material-ui/core';
 import { PlayerCard } from '../components/PlayerCard';
 import { Add } from '@material-ui/icons';
 import { connect, ConnectedProps } from 'react-redux';
-import { addPlayer, removePlayer } from '../redux/player/player.actions';
+import { addPlayerAction, removePlayerAction } from '../redux/player/player.actions';
 import { RootState } from '../redux/rootReducer';
 import { PlayerCreateModal } from '../components/PlayerCreateModal';
 
@@ -12,8 +12,8 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = {
-  addPlayer,
-  removePlayer, 
+  addPlayer: addPlayerAction.request,
+  removePlayer: removePlayerAction.request, 
 }
 
 const connector = connect(mapState, mapDispatch)
