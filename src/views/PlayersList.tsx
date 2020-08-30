@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, makeStyles, Fab, Container } from '@material-ui/core';
 import { PlayerCard } from '../components/PlayerCard';
 import { Add } from '@material-ui/icons';
 import { connect, ConnectedProps } from 'react-redux';
-import { addPlayerAction, removePlayerAction } from '../redux/player/player.actions';
+import { addPlayerAction, removePlayerAction, fetchPlayerAction } from '../redux/player/player.actions';
 import { RootState } from '../redux/rootReducer';
 import { PlayerCreateModal } from '../components/PlayerCreateModal';
 
@@ -12,6 +12,7 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = {
+  fetchPlayer: fetchPlayerAction.request,
   addPlayer: addPlayerAction.request,
   removePlayer: removePlayerAction.request, 
 }
@@ -40,9 +41,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PlayersList = ({ players, addPlayer, removePlayer }: Props) => {
+const PlayersList = ({ players, addPlayer, fetchPlayer, removePlayer }: Props) => {
   const classes = useStyles();
   const [isOpenCreateModal, setOpenCreateModal] = useState(false);
+  useEffect(() => {
+    fetchPlayer();
+  }, [])
+
   return (
     <Container>
     <PlayerCreateModal addPlayer={addPlayer} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
