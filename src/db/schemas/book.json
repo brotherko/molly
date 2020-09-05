@@ -1,0 +1,31 @@
+{
+  "title": "Book",
+  "description": "Book Schema",
+  "version": 0,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "players": {
+      "type": "array",
+      "ref": "players",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bookMode": {
+      "enum": ["blackjack", "big2"]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "bookMode",
+    "players",
+    "createdAt"
+  ]
+}

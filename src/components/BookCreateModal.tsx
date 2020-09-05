@@ -3,7 +3,7 @@ import React, { useState, FormEvent } from "react"
 import { PlayerAvatar } from "./PlayerAvatar"
 import { addBookAction } from '../redux/book/book.actions';
 import { BookMode } from "../types/book";
-import { PlayerDoc } from "../types/player";
+import { Player, PlayerDoc } from "../types/player";
 
 type Props = {
   isOpen: boolean,
@@ -26,7 +26,7 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
   const [] = useState<string>("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addBook({ created: new Date(), bookMode: BookMode.BIG2, playerIds: checkedPlayer });
+    addBook({ bookMode: BookMode.BIG2, players: checkedPlayer });
     handleClose();
   }
   const [checkedPlayer, setCheckedPlayer] = useState<string[]>([]);
@@ -60,16 +60,16 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
         <DialogContent>
           <List dense className={classes.root}>
           {players.map((player) => (
-            <ListItem key={player._id} button>
+            <ListItem key={player.id} onClick={handleToggle(player.id)} button>
               <ListItemAvatar>
                 <PlayerAvatar seed={player.name} />
               </ListItemAvatar>
-              <ListItemText id={player._id} primary={player.name} />
+              <ListItemText id={player.id} primary={player.name} />
               <ListItemSecondaryAction>
                 <Checkbox
-                  onChange={handleToggle(player._id)}
-                  checked={checkedPlayer.indexOf(player._id) !== -1}
-                  inputProps={{ 'aria-labelledby': player._id }}
+                  onChange={handleToggle(player.id)}
+                  checked={checkedPlayer.indexOf(player.id) !== -1}
+                  inputProps={{ 'aria-labelledby': player.id }}
                   edge="end"
                 />
               </ListItemSecondaryAction>

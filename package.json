@@ -22,7 +22,10 @@
     "@types/react": "^16.9.47",
     "@types/react-dom": "^16.9.8",
     "antd-mobile": "^2.3.3",
+    "json-schema-to-typescript": "^9.1.1",
+    "lodash": "^4.17.20",
     "pouchdb": "^7.2.2",
+    "pouchdb-adapter-idb": "^7.2.2",
     "rc-swipeout": "^2.0.11",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -34,14 +37,17 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.1.3",
     "redux-toolkit": "^1.1.2",
+    "rxdb": "^9.5.0",
+    "rxjs": "^6.6.2",
     "typesafe-actions": "^5.1.0",
-    "typescript": "^3.7.5"
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "schema": "json2ts -i ./src/db/schemas/ -o ./src/types/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,8 +65,11 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.161",
     "@types/pouchdb": "^6.4.0",
     "@types/react-redux": "^7.1.9",
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "@types/uuid": "^8.3.0",
+    "typescript": "^3.9.7"
   }
 }

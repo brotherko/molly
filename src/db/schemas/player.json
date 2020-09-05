@@ -1,0 +1,24 @@
+{
+  "title": "Player",
+  "description": "Player Schema",
+  "version": 0,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "primary": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "createdAt"
+  ]
+}

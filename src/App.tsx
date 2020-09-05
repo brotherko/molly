@@ -7,11 +7,14 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction, MuiThemeProvider, CssBaseline, AppBar, Toolbar, makeStyles, Box } from '@material-ui/core';
+import BookRecordList from './views/BookRecord';
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from './redux/rootReducer';
 import BookList from './views/BookList';
-import BookDetail from './views/BookDetail';
+import { initAppDataAction } from './redux/app/app.actions';
 
 const theme = createMuiTheme({
   palette: {
@@ -26,8 +29,22 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function App() {
+const mapState = (state: RootState) => ({
+})
+
+const mapDispatch = {
+  initAppData: initAppDataAction()
+}
+
+const connector = connect(mapState, mapDispatch)
+
+type Props = ConnectedProps<typeof connector>
+
+function App( { initAppData }: Props ) {
   const classes = useStyles();
+  useEffect(() => {
+    initAppData();
+  }, [])
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
@@ -38,11 +55,11 @@ function App() {
       <Router>
         <Box className={classes.content}>
           <Switch>
+            <Route path="/book/:id">
+              <BookRecordList />
+            </Route>
             <Route path="/book">
               <BookList />
-            </Route>
-            <Route path="/book/:id">
-              <BookDetail />
             </Route>
             <Route path="/add">
               <PlayersList />
@@ -80,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default connector(App);

@@ -1,6 +1,6 @@
 import { fetchPlayerAction } from './player.actions';
-import { PlayerDoc } from '../../types/player';
 import { createReducer } from 'typesafe-actions';
+import { PlayerDoc } from '../../types/player';
 
 
 export type PlayerState = {

@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme) => ({
 const PlayersList = ({ players, addPlayer, fetchPlayer, removePlayer }: Props) => {
   const classes = useStyles();
   const [isOpenCreateModal, setOpenCreateModal] = useState(false);
-  useEffect(() => {
-    fetchPlayer();
-  }, [])
 
   return (
     <Container>

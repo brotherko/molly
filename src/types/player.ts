@@ -1,7 +1,10 @@
-import { DocMeta } from "./db";
+import { RxDocument } from "rxdb";
+import { Book } from "./book";
 
-export type Player = {
+export interface Player {
+  id?: string;
   name: string;
+  createdAt?: string;
 }
 
-export type PlayerDoc = Player & DocMeta;
+export type PlayerDoc = RxDocument<Required<Player>>

@@ -1,10 +1,10 @@
-import { BookDoc } from './../../types/book';
 import { fetchBookAction } from './book.actions';
 import { createReducer } from 'typesafe-actions';
+import { BookDoc } from '../../types/book';
 
 
 export type BookState = {
-  books: Array<BookDoc>;
+  books: BookDoc[];
 }
 const initalState: BookState = {
   books: []

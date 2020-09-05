@@ -1,6 +1,5 @@
-import { PlayerDoc } from './../../types/player';
+import { Player, PlayerDoc } from '../../types/player';
 import { createAsyncAction } from 'typesafe-actions';
-import { Player } from "../../types/player";
 
 const ADD_PLAYER_REQUEST = 'ADD_PLAYER_REQUEST';
 const ADD_PLAYER_SUCCEEDED = 'ADD_PLAYER_SUCCEEDED';
@@ -24,7 +23,7 @@ export const addPlayerAction = createAsyncAction(
   ADD_PLAYER_REQUEST,
   ADD_PLAYER_SUCCEEDED,
   ADD_PLAYER_FAILED
-)<Player, undefined, Error>();
+)<Omit<Player, "id|createdAt">, undefined, Error>();
 
 export const removePlayerAction = createAsyncAction(
   REMOVE_PLAYER_REQUEST,

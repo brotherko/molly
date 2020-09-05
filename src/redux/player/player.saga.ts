@@ -1,24 +1,46 @@
-import { PlayerDoc } from './../../types/player';
-import PouchDB from 'pouchdb';
 import { call, put, takeEvery, all, takeLatest } from 'redux-saga/effects';
 import { addPlayerAction, removePlayerAction, fetchPlayerAction } from './player.actions';
-import { Player } from '../../types/player';
-;
-const fetchPlayerFromDb = () => {
-  const db = new PouchDB('player');
-  return db.allDocs({ include_docs: true }).then((data) => data.rows.map(row => row.doc));
+import { Player, PlayerDoc } from '../../types/player';
+import { v4 as uuid } from 'uuid';
+import Database from '../../db';
+
+const fetchPlayerFromDb = async () => {
+  const db = await Database.get();
+  const q = db.players.find();
+  const results = await q.exec();
+  console.log(results)
+  return results;
+}
+
+const addPlayerToDb = async (payload: Player): Promise<any> => {
+  const db = await Database.get();
+  try{
+    const res = await db.players.insert(payload)
+    return res
+  } catch(e) {
+    console.log(e)
+    throw new Error(e)
+  }
+}
+
+const removePlayerFromDb = async (payload: PlayerDoc) => {
+  try{
+    await payload.remove();
+  } catch(e) {
+    console.log(e)
+    throw new Error(e)
+  }
 }
 
 function* fetchPlayerSaga(action: ReturnType<typeof fetchPlayerAction.request>): Generator {
-  const db = new PouchDB('player');
   const docs: PlayerDoc[] = (yield call(fetchPlayerFromDb)) as PlayerDoc[];
+  console.log(docs)
   yield put(fetchPlayerAction.success(docs))
 }
 
 function* addPlayerSaga(action: ReturnType<typeof addPlayerAction.request>): Generator {
-  const db = new PouchDB('player');
   try { 
-    yield db.post(action.payload).then((res) => res.id);
+    yield call(addPlayerToDb, {...action.payload, id: uuid(), createdAt: new Date().toISOString()})
     yield put(fetchPlayerAction.request());
   } catch(e) {
     yield put(fetchPlayerAction.failure(new Error('fail')));
@@ -26,9 +48,7 @@ function* addPlayerSaga(action: ReturnType<typeof addPlayerAction.request>): Gen
 }
 
 function* removePlayerSaga(action: ReturnType<typeof removePlayerAction.request>): Generator {
-  const db = new PouchDB('player');
-  const doc: any = yield db.get(action.payload._id).then((res) => res);
-  const isOk = yield db.remove(doc).then((res) => res.ok);
+  yield call(removePlayerFromDb, action.payload);
   yield put(fetchPlayerAction.request());
 }
 

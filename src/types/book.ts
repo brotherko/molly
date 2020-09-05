@@ -1,26 +1,14 @@
-import { DocMeta } from "./db";
-import { Player } from "./player";
+import { RxDocument } from "rxdb";
 
 export enum BookMode {
-  BLACKJACK = 'Blackjack',
-  BIG2 = 'Big2',
-  POKER = 'Poker'
+  BLACKJACK = 'blackjack',
+  BIG2 = 'big2'
 }
-
-type BookRecord = BookRecordEntity[]
-
-type BookRecordEntity = {
-  playerId: string;
-  score: number;
-}
-
-export type Book = {
-  created: Date;
+export interface Book {
+  id?: string;
+  players: string[];
   bookMode: BookMode;
-  playerIds?: string[];
-  records?: BookRecord[];
+  createdAt?: string;
 }
 
-
-
-export type BookDoc = Book & DocMeta;
+export type BookDoc = RxDocument<Required<Book>>

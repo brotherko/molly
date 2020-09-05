@@ -7,11 +7,13 @@ import { fetchBookAction, addBookAction, removeBookAction } from '../redux/book/
 import { connect, ConnectedProps } from 'react-redux';
 import { BookCreateModal } from '../components/BookCreateModal';
 import { fetchPlayerAction } from '../redux/player/player.actions';
-import { PlayerDoc } from '../types/player';
-import { BookDoc } from '../types/book';
 import { createSelector } from '@reduxjs/toolkit'
 import { AvatarGroup } from '@material-ui/lab';
 import { PlayerAvatar } from '../components/PlayerAvatar';
+import { useHistory } from 'react-router-dom';
+import { Player, PlayerDoc } from '../types/player';
+import { Book, BookDoc } from '../types/book';
+import { RxDocument } from 'rxdb';
 
 const getPlayers = (state: RootState) => state.player.players
 const getBooks = (state: RootState) => state.book.books
@@ -19,7 +21,7 @@ const getBooks = (state: RootState) => state.book.books
 const getBookDetails = createSelector([getPlayers, getBooks],
   (players: PlayerDoc[], books: BookDoc[]) => {
     return books.map((book) => {
-      const bookPlayers = players.filter((player) => book.playerIds ? (book.playerIds).includes(player._id) : undefined);
+      const bookPlayers = players.filter((player) => book.players ? (book.players).includes(player.id) : undefined);
       return {
         ...book,
         players: bookPlayers
@@ -46,10 +48,9 @@ type Props = ConnectedProps<typeof connector>
 
 const BookList = ({ books, players, fetchPlayer, fetchBook, addBook, removeBook }: Props) => {
   const [isOpenCreateModal, setOpenCreateModal] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    fetchBook();
-    fetchPlayer();
   }, [])
   return (
     <div>
@@ -60,13 +61,13 @@ const BookList = ({ books, players, fetchPlayer, fetchBook, addBook, removeBook 
       <List>
         {books.map((book) => (
           <React.Fragment>
-            <ListItem>
+            <ListItem button onClick={() => history.push(`/book/`)}>
               <ListItemAvatar>
                 <Avatar>
                   <AttachMoney />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Big 2" secondary={book.created} />
+              <ListItemText primary="Big 2" secondary={book.createdAt} />
               <ListItemSecondaryAction>
                 <AvatarGroup max={4}>
                   {book.players.map((player) => (
