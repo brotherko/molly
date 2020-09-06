@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { AnimatedSwitch } from 'react-router-transition';
 import React, { useEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BottomNavigation, BottomNavigationAction, MuiThemeProvider, CssBaseline, AppBar, Toolbar, makeStyles, Box } from '@material-ui/core';

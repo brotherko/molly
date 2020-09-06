@@ -84,7 +84,7 @@ const BookRecordCreateModal = ({ isOpen, handleClose, book, addBookRecord }: Pro
           <List className={classes.root}>
             {book.players.map((player) => {
               return (
-                <React.Fragment>
+                <React.Fragment key={`book-record-player-${player.id}`}>
                   <ListItem key={player.id} button>
                     <ListItemAvatar>
                       <PlayerAvatar seed={player.name} />
@@ -99,7 +99,7 @@ const BookRecordCreateModal = ({ isOpen, handleClose, book, addBookRecord }: Pro
                           onChange={(e) => handleSelect(parseInt(e.target.value), player.id)}
                         >
                           {[...Array(13)].map((_, i) => (
-                            <option value={i}>{i}</option>
+                            <option key={`input-score-${player.id}-${i}`}value={i}>{i}</option>
                           ))}
                         </NativeSelect>
                       </FormControl>

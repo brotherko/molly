@@ -43,7 +43,7 @@ const BookList = ({ books, players, addBook }: Props) => {
       <BookCreateModal players={players} addBook={addBook} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
       <List>
         {books.map((book) => (
-          <React.Fragment>
+          <React.Fragment key={`book-list-item-${book.id}`}>
             <ListItem button onClick={() => history.push(`/book/${book.id}`)}>
               <ListItemAvatar>
                 <Avatar>
@@ -54,7 +54,7 @@ const BookList = ({ books, players, addBook }: Props) => {
               <ListItemSecondaryAction>
                 <AvatarGroup max={4}>
                   {book.players.map((player) => (
-                    <PlayerAvatar seed={player.name} />
+                    <PlayerAvatar key={`book-list-item-avatar-${book.id}-${player.id}`} seed={player.name} />
                   ))}
                 </AvatarGroup>
               </ListItemSecondaryAction>

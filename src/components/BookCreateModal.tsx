@@ -60,7 +60,7 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
         <DialogContent>
           <List dense className={classes.root}>
           {players.map((player) => (
-            <ListItem key={player.id} onClick={handleToggle(player.id)} button>
+            <ListItem key={`create-book-player-${player.id}`} onClick={handleToggle(player.id)} button>
               <ListItemAvatar>
                 <PlayerAvatar seed={player.name} />
               </ListItemAvatar>

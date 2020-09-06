@@ -48,7 +48,7 @@ const PlayersList = ({ players, addPlayer, fetchPlayer, removePlayer }: Props) =
       <Box display="flex" flexWrap="wrap">
         {
           players && players.map((player) => (
-            <Box flex-basis="50%" className={classes.card}>
+            <Box key={`player-card-${player.id}`} flex-basis="50%" className={classes.card}>
               <PlayerCard player={player} removePlayer={() => removePlayer(player)} />
             </Box>
           ))

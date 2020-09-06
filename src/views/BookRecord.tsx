@@ -33,7 +33,7 @@ const BookRecordList = ({ fetchBook, books, isLoading }: Props) => {
 
   const summary = useMemo(() => {
     console.log("calculating summary")
-    if (!book || !id || isLoading) {
+    if (!book || !id) {
       return undefined;
     }
     const totalScores = book.players.map((player) => ({
@@ -58,25 +58,25 @@ const BookRecordList = ({ fetchBook, books, isLoading }: Props) => {
     })
 
     return pnl
-  }, [book, isLoading]);
+  }, [book]);
   return (
     <Container>
-      {isLoading ? <Box>Loading</Box> : <TableContainer component={Paper}>
+      {(isLoading || !book) ? <Box>Loading</Box> : <TableContainer component={Paper}>
         <FloatingButton onClick={() => setOpenCreateModal(true)}>
           <Add />
         </FloatingButton>
         <BookRecordCreateModal
-          book={book!}
+          book={book}
           isOpen={isOpenCreateModal}
           handleClose={() => setOpenCreateModal(false)}
         />
         <Table aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              {/* <TableCell></TableCell> */}
-              {book!.players.map((player) => {
+              <TableCell></TableCell>
+              {book.players.map((player) => {
                 return (
-                  <TableCell align="center">
+                  <TableCell key={`book-${book.id}-header-${player.id}`} align="center">
                     <Box textAlign="center">
                       <PlayerAvatar seed={player.name} />
                     </Box>
@@ -88,20 +88,22 @@ const BookRecordList = ({ fetchBook, books, isLoading }: Props) => {
               })}
             </TableRow>
             <TableRow>
-              {book!.players.map((player) => {
+              <TableCell>Score</TableCell>
+              {book.players.map((player) => {
                 const playerSummary = summary ? summary.find((s) => s.playerId === player.id) : undefined;
                 return (
-                  <TableCell align="center">
+                  <TableCell key={`book-${book.id}-score-${player.id}`} align="center">
                     {playerSummary ? playerSummary.pnl : 'X'}
                   </TableCell>
                 )
               })}
             </TableRow>
             <TableRow>
-              {book!.players.map((player) => {
+              <TableCell>PNL</TableCell>
+              {book.players.map((player) => {
                 const playerSummary = summary ? summary.find((s) => s.playerId === player.id) : undefined;
                 return (
-                  <TableCell align="center">
+                  <TableCell key={`book-${book.id}-pnl-${player.id}`} align="center">
                     {playerSummary ? playerSummary.scores : 'X'}
                   </TableCell>
                 )
@@ -109,13 +111,16 @@ const BookRecordList = ({ fetchBook, books, isLoading }: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {book!.records.map(({ records }, i) => {
+            {book.records.map(({ records }, i) => {
               return (
-                <TableRow>
-                  {/* <TableCell>{i}</TableCell> */}
-                  {book!.players.map((player) => {
+                <TableRow key={`book-record-${book.id}-row-${i}`}>
+                  <TableCell>{i}</TableCell>
+                  {book.players.map((player) => {
                     const thisPlayerRecord = records.find((r) => r.playerId === player.id);
-                    return (<TableCell align="center">{thisPlayerRecord!.score}</TableCell>)
+                    return (
+                    <TableCell key={`book-record-${book.id}-row-${i}-player-${player.id}`} align="center">
+                      {thisPlayerRecord!.score}
+                      </TableCell>)
                   })}
                 </TableRow>
               )
