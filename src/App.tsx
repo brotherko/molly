@@ -43,8 +43,9 @@ type Props = ConnectedProps<typeof connector>
 function App( { initAppData }: Props ) {
   const classes = useStyles();
   useEffect(() => {
+    console.log("hi")
     initAppData();
-  }, [])
+  })
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />

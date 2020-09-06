@@ -5,13 +5,16 @@ import { BookDoc } from '../../types/book';
 
 export type BookState = {
   books: BookDoc[];
+  loading: boolean;
 }
 const initalState: BookState = {
-  books: []
+  books: [],
+  loading: true,
 };
 
 
 export const bookReducer = 
   createReducer(initalState)
+  .handleAction([fetchBookAction.request], (state) => ({ ...state, loading: true }))
   .handleAction([fetchBookAction.success], 
-    (state, action) => ({ books: action.payload }))
+    (state, action) => ({ books: action.payload, loading: false }))

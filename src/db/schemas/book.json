@@ -8,11 +8,20 @@
       "type": "string",
       "primary": true
     },
-    "players": {
+    "playerIds": {
       "type": "array",
-      "ref": "players",
+      "ref": "player",
       "items": {
         "type": "string"
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "itmes": {
+          "type": "object"
+        }
       }
     },
     "bookMode": {
@@ -23,9 +32,13 @@
       "format": "date-time"
     }
   },
+  "indexes": [
+    "id",
+    "createdAt"
+  ],
   "required": [
     "bookMode",
-    "players",
+    "playerIds",
     "createdAt"
   ]
 }

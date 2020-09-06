@@ -7,9 +7,11 @@ import Database from '../../db';
 const fetchPlayerFromDb = async () => {
   const db = await Database.get();
   const q = db.players.find();
-  const results = await q.exec();
-  console.log(results)
-  return results;
+  const docs = await q.exec();
+  return docs.map((doc) => ({
+    ref: doc,
+    ...doc.toJSON(),
+  }));
 }
 
 const addPlayerToDb = async (payload: Player): Promise<any> => {
@@ -25,7 +27,7 @@ const addPlayerToDb = async (payload: Player): Promise<any> => {
 
 const removePlayerFromDb = async (payload: PlayerDoc) => {
   try{
-    await payload.remove();
+    await payload.ref.remove();
   } catch(e) {
     console.log(e)
     throw new Error(e)

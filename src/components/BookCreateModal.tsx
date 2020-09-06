@@ -26,7 +26,7 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
   const [] = useState<string>("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addBook({ bookMode: BookMode.BIG2, players: checkedPlayer });
+    addBook({ bookMode: BookMode.BIG2, playerIds: checkedPlayer, records: [] });
     handleClose();
   }
   const [checkedPlayer, setCheckedPlayer] = useState<string[]>([]);

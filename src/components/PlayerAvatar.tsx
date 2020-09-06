@@ -12,5 +12,5 @@ const _avatar = new Avatars(sprites, {
 });
 
 export const PlayerAvatar = ( { seed, ...rest }: Props) => {
-  return (<MuiAvatar src={_avatar.create(seed)} {...rest}></MuiAvatar>)
+  return (<MuiAvatar style={{margin: 'auto'}}src={_avatar.create(seed)} {...rest}></MuiAvatar>)
 }

@@ -1,5 +1,5 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { BookDoc, Book } from "../../types/book";
+import { BookDoc, Book, BookRecordRow, BookRecord } from "../../types/book";
 
 const ADD_BOOK_REQUEST = 'ADD_BOOK_REQUEST';
 const ADD_BOOK_SUCCEEDED = 'ADD_BOOK_SUCCEEDED';
@@ -41,11 +41,14 @@ export const editBookAction = createAsyncAction(
 )<Book, undefined, Error>();
 
 
-// export const addBookRecordAction = createAsyncAction(
-//   ADD_BOOK_RECORD_REQUEST,
-//   ADD_BOOK_RECORD_SUCCEEDED,
-//   ADD_BOOK_RECORD_FAILED
-// )<DocMeta & BookRecord, undefined, Error>();
+export const addBookRecordAction = createAsyncAction(
+  ADD_BOOK_RECORD_REQUEST,
+  ADD_BOOK_RECORD_SUCCEEDED,
+  ADD_BOOK_RECORD_FAILED
+)<{
+  book: BookDoc,
+  record: BookRecord[],
+}, undefined, Error>();
 
 export const removeBookAction = createAsyncAction(
   REMOVE_BOOK_REQUEST,

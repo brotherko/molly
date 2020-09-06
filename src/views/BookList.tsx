@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, Divider } from '@material-ui/core';
 import { AttachMoney, Add } from '@material-ui/icons'
 import { FloatingButton } from '../components/FloatingButton';
@@ -7,31 +7,14 @@ import { fetchBookAction, addBookAction, removeBookAction } from '../redux/book/
 import { connect, ConnectedProps } from 'react-redux';
 import { BookCreateModal } from '../components/BookCreateModal';
 import { fetchPlayerAction } from '../redux/player/player.actions';
-import { createSelector } from '@reduxjs/toolkit'
 import { AvatarGroup } from '@material-ui/lab';
 import { PlayerAvatar } from '../components/PlayerAvatar';
 import { useHistory } from 'react-router-dom';
-import { Player, PlayerDoc } from '../types/player';
-import { Book, BookDoc } from '../types/book';
-import { RxDocument } from 'rxdb';
-
-const getPlayers = (state: RootState) => state.player.players
-const getBooks = (state: RootState) => state.book.books
-
-const getBookDetails = createSelector([getPlayers, getBooks],
-  (players: PlayerDoc[], books: BookDoc[]) => {
-    return books.map((book) => {
-      const bookPlayers = players.filter((player) => book.players ? (book.players).includes(player.id) : undefined);
-      return {
-        ...book,
-        players: bookPlayers
-      }
-    })
-  })
+import { getAllBooksSelector } from '../redux/book/book.selectors';
 
 
 const mapState = (state: RootState) => ({
-  books: getBookDetails(state),
+  books: getAllBooksSelector(state),
   players: state.player.players
 })
 
@@ -46,7 +29,7 @@ const connector = connect(mapState, mapDispatch)
 
 type Props = ConnectedProps<typeof connector>
 
-const BookList = ({ books, players, fetchPlayer, fetchBook, addBook, removeBook }: Props) => {
+const BookList = ({ books, players, addBook }: Props) => {
   const [isOpenCreateModal, setOpenCreateModal] = useState(false);
   const history = useHistory();
 
@@ -61,7 +44,7 @@ const BookList = ({ books, players, fetchPlayer, fetchBook, addBook, removeBook 
       <List>
         {books.map((book) => (
           <React.Fragment>
-            <ListItem button onClick={() => history.push(`/book/`)}>
+            <ListItem button onClick={() => history.push(`/book/${book.id}`)}>
               <ListItemAvatar>
                 <Avatar>
                   <AttachMoney />

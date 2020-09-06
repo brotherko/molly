@@ -1,13 +1,16 @@
 import { call, put, takeEvery, all, takeLatest } from 'redux-saga/effects';
-import { addBookAction, removeBookAction, fetchBookAction } from './book.actions';
-import { Book, BookDoc } from '../../types/book';
+import { addBookAction, removeBookAction, fetchBookAction, editBookAction, addBookRecordAction } from './book.actions';
+import { Book, BookDoc, BookRecord } from '../../types/book';
 import { v4 as uuid } from 'uuid';
 import Database from '../../db';
 
 const fetchBookFromDb = async () => {
-  const q = (await Database.get()).books.find();
-  const results = await q.exec();
-  return results;
+  const q = (await Database.get()).books.find().sort('createdAt');
+  const docs = await q.exec();
+  return docs.map((doc) => ({
+    ref: doc,
+    ...doc.toJSON(),
+  }));
 }
 
 const addBookToDb = async (payload: Book) => {
@@ -20,9 +23,10 @@ const addBookToDb = async (payload: Book) => {
   }
 }
 
+
 const removeBookFromDb = async (payload: BookDoc) => {
   try{
-    await payload.remove();
+    await payload.ref.remove();
   } catch(e) {
     console.log(e)
     throw new Error(e)
@@ -36,9 +40,34 @@ function* fetchBookSaga(action: ReturnType<typeof fetchBookAction.request>): Gen
 
 function* addBookSaga(action: ReturnType<typeof addBookAction.request>): Generator {
   try { 
-    yield call(addBookToDb, {...action.payload, id: uuid(), createdAt: new Date().toISOString()})
+    yield call(addBookToDb, {
+      ...action.payload,
+      records: [],
+      id: uuid(),
+      createdAt: new Date().toISOString()
+    })
     yield put(fetchBookAction.request());
   } catch(e) {
+    yield put(fetchBookAction.failure(new Error('fail')));
+  }
+}
+
+function* addBookRecordSaga(action: ReturnType<typeof addBookRecordAction.request>): Generator {
+  try {
+    try{
+      yield action.payload.book.ref.update({
+        $push: { 
+          records: {
+            createdAt: new Date().toISOString(),
+            records: action.payload.record
+          }
+        }
+      });
+    }catch(e){
+      console.log(e)
+    }
+    yield put(fetchBookAction.request());
+   } catch(e) {
     yield put(fetchBookAction.failure(new Error('fail')));
   }
 }
@@ -52,6 +81,7 @@ export function* BookSaga(){
   yield all([
     takeLatest(fetchBookAction.request, fetchBookSaga),
     takeEvery(addBookAction.request, addBookSaga),
-    takeEvery(removeBookAction.request, removeBookSaga)
+    takeEvery(removeBookAction.request, removeBookSaga),
+    takeEvery(addBookRecordAction.request, addBookRecordSaga)
   ]);
 }

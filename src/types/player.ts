@@ -7,4 +7,8 @@ export interface Player {
   createdAt?: string;
 }
 
-export type PlayerDoc = RxDocument<Required<Player>>
+export type PlayerRxdoc = RxDocument<Required<Player>>
+
+export type PlayerDoc = Required<Player> & {
+  ref: PlayerRxdoc;
+}
