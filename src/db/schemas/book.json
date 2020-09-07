@@ -15,6 +15,9 @@
         "type": "string"
       }
     },
+    "configs": {
+      "type": "object"
+    },
     "records": {
       "type": "array",
       "items": {

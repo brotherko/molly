@@ -36,7 +36,6 @@ const removePlayerFromDb = async (payload: PlayerDoc) => {
 
 function* fetchPlayerSaga(action: ReturnType<typeof fetchPlayerAction.request>): Generator {
   const docs: PlayerDoc[] = (yield call(fetchPlayerFromDb)) as PlayerDoc[];
-  console.log(docs)
   yield put(fetchPlayerAction.success(docs))
 }
 

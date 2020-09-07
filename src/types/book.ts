@@ -16,13 +16,23 @@ export type BookRecordRow = {
   records: BookRecord[]
 };
 
-export interface Book {
+export type BookShared = {
   id?: string;
   playerIds: string[];
-  records?: BookRecordRow[];
-  bookMode: BookMode;
   createdAt?: string;
 }
+
+export type Big2Book = BookShared & {
+  bookMode: BookMode.BIG2;
+  records?: BookRecordRow[];
+  configs: {
+    dollarPerScore?: number;
+    doubleChaoThreshold?: number;
+    tripleChaoThreshold?: number;
+  }
+}
+
+export type Book = Big2Book 
 
 export type BookRxDoc = RxDocument<Required<Book>>
 
@@ -33,8 +43,6 @@ export type BookDoc = Required<Book> & {
 export type BookFullDoc = BookDoc & {
   players: PlayerDoc[];
 }
-
-
 
 export type BookSummary = {
   playerId: string;

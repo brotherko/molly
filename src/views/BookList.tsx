@@ -33,8 +33,6 @@ const BookList = ({ books, players, addBook }: Props) => {
   const [isOpenCreateModal, setOpenCreateModal] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {
-  }, [])
   return (
     <div>
       <FloatingButton onClick={() => setOpenCreateModal(true)}>
@@ -42,7 +40,7 @@ const BookList = ({ books, players, addBook }: Props) => {
       </FloatingButton>
       <BookCreateModal players={players} addBook={addBook} isOpen={isOpenCreateModal} handleClose={() => setOpenCreateModal(false)} />
       <List>
-        {books.map((book) => (
+        {books === undefined ? 'Loading' : books.map((book) => (
           <React.Fragment key={`book-list-item-${book.id}`}>
             <ListItem button onClick={() => history.push(`/book/${book.id}`)}>
               <ListItemAvatar>

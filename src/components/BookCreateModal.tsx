@@ -26,7 +26,16 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
   const [] = useState<string>("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addBook({ bookMode: BookMode.BIG2, playerIds: checkedPlayer, records: [] });
+    addBook({
+      bookMode: BookMode.BIG2,
+      playerIds: checkedPlayer,
+      records: [],
+      configs: {
+        dollarPerScore: 1.5,
+        doubleChaoThreshold: 10,
+        tripleChaoThreshold: 13,
+      }
+    });
     handleClose();
   }
   const [checkedPlayer, setCheckedPlayer] = useState<string[]>([]);
@@ -45,7 +54,7 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
   };
 
 
-  const classes= useStyles();
+  const classes = useStyles();
   return (
     <Dialog
       open={isOpen}
@@ -59,22 +68,22 @@ export const BookCreateModal = ({ isOpen, handleClose, players, addBook }: Props
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <List dense className={classes.root}>
-          {players.map((player) => (
-            <ListItem key={`create-book-player-${player.id}`} onClick={handleToggle(player.id)} button>
-              <ListItemAvatar>
-                <PlayerAvatar seed={player.name} />
-              </ListItemAvatar>
-              <ListItemText id={player.id} primary={player.name} />
-              <ListItemSecondaryAction>
-                <Checkbox
-                  onChange={handleToggle(player.id)}
-                  checked={checkedPlayer.indexOf(player.id) !== -1}
-                  inputProps={{ 'aria-labelledby': player.id }}
-                  edge="end"
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
+            {players.map((player) => (
+              <ListItem key={`create-book-player-${player.id}`} onClick={handleToggle(player.id)} button>
+                <ListItemAvatar>
+                  <PlayerAvatar seed={player.name} />
+                </ListItemAvatar>
+                <ListItemText id={player.id} primary={player.name} />
+                <ListItemSecondaryAction>
+                  <Checkbox
+                    onChange={handleToggle(player.id)}
+                    checked={checkedPlayer.indexOf(player.id) !== -1}
+                    inputProps={{ 'aria-labelledby': player.id }}
+                    edge="end"
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
 
           </List>
         </DialogContent>

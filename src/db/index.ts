@@ -13,6 +13,7 @@ addRxPlugin(require('pouchdb-adapter-idb'));
 
 
 type PlayerCollection = RxCollection<Player>;
+
 type BookCollection = RxCollection<Book>;
 
 type DbCollections = {

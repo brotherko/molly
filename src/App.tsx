@@ -44,7 +44,6 @@ type Props = ConnectedProps<typeof connector>
 function App( { initAppData }: Props ) {
   const classes = useStyles();
   useEffect(() => {
-    console.log("hi")
     initAppData();
   })
   return (
@@ -57,8 +56,7 @@ function App( { initAppData }: Props ) {
       <Router>
         <Box className={classes.content}>
           <Switch>
-            <Route path="/book/:id">
-              <BookRecordList />
+            <Route path="/book/:id" render={(props) => <BookRecordList bookId={props.match.params.id} />}>
             </Route>
             <Route path="/book">
               <BookList />
